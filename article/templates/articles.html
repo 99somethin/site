@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Статья</title>
+</head>
+<body>
+    <h1>Добро пожаловать пользователи в сети:</h1>
+    {% for item in team %}
+    <h2>{{item.name}}: {{item.age}}</h2>
+    {% endfor %}
+</body>
+</html>

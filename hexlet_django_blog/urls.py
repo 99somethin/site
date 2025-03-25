@@ -17,10 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from hexlet_django_blog import views
+from article.views import index
+
+
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.MainIndexView.as_view()),
     path('about/', views.about),
     path('admin/', admin.site.urls),
-    path('article/', include('article.urls')),
+    path('article/', index.as_view()),
 ]

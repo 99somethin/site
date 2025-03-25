@@ -4,6 +4,7 @@ from article import views
 
 urlpatterns = [
     path('', views.index),
+    
 ]
 
 
