@@ -9,8 +9,16 @@ class index(View):
         {'name': 'petya', 'age': '18'},
         {'name': 'misha', 'age': '28'}
     ]
-
     def get(self, request):
         return render(request, 'articles.html', context={
-            'team': self.TEAM
+            'team': self.TEAM,
+        })
+
+class current_index(View):
+    def get(self, request, name, age):
+        current_item = [
+            {'name': name, 'age': age}
+        ]
+        return render(request, 'articles.html', context={
+            'team': current_item,
         })
