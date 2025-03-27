@@ -7,7 +7,7 @@ class MainIndexView(TemplateView):
     template_name = 'index.html'
 
     def get(self, request):
-        new_path = reverse('current_article', kwargs={'name': 'anton', 'age': '42'})
+        new_path = reverse('all_articles')
         return redirect(new_path)
 
 

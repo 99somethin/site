@@ -1,24 +1,37 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, Http404
 from django.views import View
+from article.models import Article
+from django.views.decorators.http import require_http_methods
 
 # Create your views here.
 
 class index(View):
-    TEAM = [
-        {'name': 'petya', 'age': '18'},
-        {'name': 'misha', 'age': '28'}
-    ]
     def get(self, request):
         return render(request, 'articles.html', context={
-            'team': self.TEAM,
+            'team': Article.objects.all(),
         })
 
+
+
 class current_index(View):
-    def get(self, request, name, age):
-        current_item = [
-            {'name': name, 'age': age}
-        ]
-        return render(request, 'articles.html', context={
-            'team': current_item,
-        })
+    require_http_methods = ['get', 'post']
+
+    def get(self, request, name, body):
+        current_item = []
+        current_item.append(next((item for item in Article.objects.all() if item.name == name),None))
+        if all(0 for item in current_item if item == None):
+                return render(request, 'articles.html', context={
+                     'team': current_item,
+                })
+        else:
+            return redirect('error_404')
+        
+    def post(self, request, name, body):
+        Article.objects.create(name=name, body=body)
+        return HttpResponse('good',200)
+        
+def return_404(request):
+     return render(request, 'Http404.html')
+
+        
