@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Статья с айди: {{ article.id }}</h1>
+    <h2>- {{ article.name }}</h2>
+    <div>{{ article.body|slice:":200" }}</div>
+
+    <h3>Комментарии:</h3>
+    {% for comment in article.comments.all %}
+        <div>
+            <p><strong>{{ comment.created_at }}</strong></p>
+            <p>{{ comment.content }}</p>
+        </div>
+    {% empty %}
+        <p>Комментариев пока нет.</p>
+    {% endfor %}
+    
+    <h3>Добавить комментарий:</h3>
+    <form action="{% url 'comment_create' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Выводим форму для комментариев -->
+        <input type="submit" value="Добавить комментарий">
+    </form>
+{% endblock %}
